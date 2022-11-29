@@ -14,7 +14,7 @@
         ```js
         contracts_build_directory: "./frontend/public/contracts"
         ```
-1. 👇 Add the `Demo.sol` file in contract folder. Here is the code 👇
+1. 👇 Add the `Demo.sol` file in contract folder. Here is the code 👇       (--You can skip this step--)
     ```js
     // SPDX-License-Identifier: UNLICENCED
     pragma solidity ^0.8.7;
