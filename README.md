@@ -1,70 +1,59 @@
-# Getting Started with Create React App
+# **How To Use 🤔?**
+1. First install truffle globally `npm install truffle -g`
+1. Use `truffle init` to intiate truffle.
+1. Now make changes in migration folder
+    ```js
+    const demo = artifacts.require("demo");     
+    module.exports = function(deployer){
+        deployer.deploy(demo);              
+    }
+    ```
+1. Add changes in `truffle-config.js` file.
+    - Uncomment the development network and change port to `7545`
+    - Then add the line given below in the `module.exports =` section
+        ```js
+        contracts_build_directory: "./frontend/public/contracts"
+        ```
+1. 👇 Add the `Demo.sol` file in contract folder. Here is the code 👇
+    ```js
+    // SPDX-License-Identifier: UNLICENCED
+    pragma solidity ^0.8.7;
+    contract demo{
+        uint tomato;
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+        receive() external payable{}
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+        uint public numoffunder;    
+        mapping (uint => address) private funders;
+        
+        function transfer_tocontract() external payable{
+            funders[numoffunder] = msg.sender;
+        }
+        function withdraw(uint withdrawAmount) external payable{
+            require(
+                withdrawAmount <= 2000000000000000000,
+                "Cannot withdraw more than 2 ether"
+            );
+            payable(msg.sender).transfer(withdrawAmount);
+            
+        }
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+        //setting and getting value of tomato
+        function setvalue(uint value) public {
+            tomato = value;
+        }
 
-### `npm test`
+        function getvalue() view public returns(uint){
+            return tomato;
+        }
+    }   
+    ```
+1. Add the Frontend folder in this repo in the root directory of project.
+1. Use `npm install` accordingly to install dependencies in frontend folder.
+1. Now migrate the contract using `truffle migrate --reset` in frontend folder.
+1. Finally Use `npm start` to see the working ✔✔
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
